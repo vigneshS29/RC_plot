@@ -1,6 +1,6 @@
 Energy Diagram Plotting Script:
 
-This Python script, plot_energy_diagram.py,  creates a visual energy diagram  from ground state (GS) and transition state (TS) energies provided in a CSV file. It also allows you to optionally include an existing energy plot PDF in the output.
+This Python script creates a visual energy diagram  from ground state (GS) and transition state (TS) energies provided in a CSV file. It also allows you to optionally include an existing energy plot PDF in the output.
 
 Usage:
 
