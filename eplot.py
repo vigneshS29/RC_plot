@@ -9,8 +9,9 @@ from splines import *
 parser = argparse.ArgumentParser()
 
 parser.add_argument('-f',dest='file_path', type=str, default='data.csv',help='Input File, Default = data.csv')
-parser.add_argument('-o',dest='output', type=str, default='energy_diagram.pdf',help='Output Image Name, Default = energy_diagram.pdf')
-parser.add_argument('-t',dest='func', type=str, default='gaussian',help='Spline Function (gaussian/exponential), Default = gaussian')
+parser.add_argument('-o',dest='output', type=str, default='energy_diagram.pdf',help='Output Image Name (Default = energy_diagram.pdf)')
+parser.add_argument('-t',dest='func', type=str, default='gaussian',help='Spline Function (gaussian/exponential) (Default = gaussian)')
+parser.add_argument('-fl_width',dest='flw', type=float, default=0.2,help='Width of the flat line for GS energy (Default = 0.2)')
 args = parser.parse_args()
 
 def main(argv):
@@ -25,14 +26,28 @@ def main(argv):
         x,y = data[j][0],data[j][1]
 
         for i in range(0,len(x)-1,1):
-            xtemp = [x[i],x[i+1]]
+            
             ytemp = [y[i],y[i+1]]
+
+            if ytemp[0] < ytemp[1]: GS = 0
+            else: GS = 1
+
+            if GS == 0:  
+                xtemp = [x[i]+args.flw,x[i+1]]
+                plt.plot([x[i],x[i]+args.flw],[ytemp[0],ytemp[0]],color='black',alpha=0.5)
+                plt.scatter(x[i+1],ytemp[1],color=color_list[int(j)-1],edgecolor='black',s=50)
+            
+            elif GS == 1:  
+                xtemp = [x[i],x[i+1]-args.flw]
+                plt.plot([x[i+1]-args.flw,x[i+1]],[ytemp[1],ytemp[1]],color='black',alpha=0.5)
+                plt.scatter(x[i],ytemp[0],color=color_list[int(j)-1],edgecolor='black',s=50)
             
             if args.func == 'exponential': new_x,new_y = exponential_func(xtemp,ytemp)
             if args.func == 'gaussian': new_x,new_y = gaussian_func(xtemp,ytemp)
             
             plt.plot(new_x, new_y,color='black',alpha=0.5)
-            plt.scatter(xtemp,ytemp,color=color_list[int(j)-1],edgecolor='black',s=50)
+            plt.text(x[i]+0.35,y[i],y[i])
+            
         
     plt.xticks(np.arange(0,max(x)+1))
     plt.xlim(min(x)-1,max(x)+1)
