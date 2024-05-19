@@ -1,7 +1,6 @@
 #Author: Vignesh Sathyaseelan (vsathyas@purdue.edu)
 import os, sys, argparse, subprocess
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 from splines import *
 
