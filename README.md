@@ -2,8 +2,7 @@ This Python package creates a visual energy diagram  from ground state (GS) and 
 
 Usage:
 
-- This script uses matplotlib for plotting.
-- The script requires a input data file
+- The script requires a input data file (.csv format)
 - The script currently assumes the first column in your CSV file contains state labels and the following columns contain GS and TS energies You can modify the script to match the format of your data file.
 - You can choose bettwen a exponential and gaussian spline to connect the transition states to the ground states. 
 - It will generate a energy diagram plot with a user specifed name.
